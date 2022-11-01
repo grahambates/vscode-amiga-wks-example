@@ -1,4 +1,6 @@
 build
+out
+obj
 uae/dh0/gencop
 .DS_Store
 bin
