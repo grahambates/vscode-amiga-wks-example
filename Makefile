@@ -9,6 +9,7 @@ CC = m68k-amiga-elf-gcc
 VASM = vasmm68k_mot
 
 ifdef OS
+	WINDOWS = 1
 	SHELL = cmd.exe
 endif
 
@@ -29,7 +30,11 @@ $(OUT).elf: $(objects)
 
 clean:
 	$(info Cleaning...)
-	@$(RM) obj/* $(OUT).*
+ifdef WINDOWS
+	@del /q obj\* out\*
+else
+	@$(RM) obj/* out/*
+endif
 
 -include $(objects:.o=.d)
 
