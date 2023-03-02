@@ -45,10 +45,10 @@ _start:
 		lea	CUSTOM,a6				; adresse de base
 		move.w	INTENAR(a6),INTENARSave			; Copie de la valeur des interruptions
 		move.w	DMACONR(a6),DMACONSave			; sauvegarde du dmacon
-		debug_start_idle
+		DebugStartIdle
 		move.w	#312,d0					; wait for eoframe paramètre pour la routine de WaitRaster - position à attendre
 		bsr.w	WaitRaster				; Appel de la routine wait raster - bsr = jmp,mais pour des adresses moins distantes
-		debug_stop_idle
+		DebugStartIdle
 		move.w	#$7fff,INTENA(a6)			; désactivation de toutes les interruptions bits : valeur + masque sur 7b
 		move.w	#$7fff,INTREQ(a6)			; disable all bits in INTREQ
 		move.w	#$7fff,INTREQ(a6)			; disable all bits in INTREQ
@@ -130,15 +130,15 @@ resetcount:
 ******************************************************************
 mainloop:
 		; Wait for vertical blank
-		debug_start_idle
+		DebugStartIdle
 		move.w	#$0c,d0					;No buffering, so wait until raster
 		bsr.w	WaitRaster				;is below the Display Window.
-		debug_stop_idle
+		DebugStopIdle
 
-		debug_clear
-		debug_filled_rect 100,400,400,440,$00ff00
-		debug_rect 98,398,402,442,$ffffff
-		debug_text 110,420,example_text,$ff00ff
+		DebugClear
+		DebugFilledRect 100,400,400,440,$00ff00
+		DebugRect 98,398,402,442,$ffffff
+		DebugText 110,420,example_text,$ff00ff
 
 ;----------- main loop ------------------
 		add	d6,d7					; Increment
