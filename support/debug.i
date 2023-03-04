@@ -204,6 +204,7 @@ DEBUG_RESOURCE_TYPE_COPPERLIST = 2
 ; \4 = arg3
 DebugCmd	macro
 		ifne	DEBUG
+		move.l	d0,-(sp)				; d0 gets trashed
 		move.l	\4,-(sp)
 		move.l	\3,-(sp)
 		move.l	\2,-(sp)
@@ -211,6 +212,7 @@ DebugCmd	macro
 		pea	88
 		jsr	$f0ff60
 		lea	20(sp),sp
+		move.l	(sp)+,d0
 		endc
 		endm
 
